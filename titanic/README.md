@@ -51,3 +51,14 @@ This project uses the Kaggle Titanic dataset.
 - `data/raw/test.csv`
 
 
+## Project Status
+
+This project is considered complete.
+
+The focus was on building a clean, leak-free, reproducible ML pipeline rather than maximizing the Kaggle leaderboard score.
+Several feature engineering ideas (e.g., Title extraction, HasDeck) were evaluated and accepted/dropped based on generalization benefit.
+
+The repository is frozen in its current state.
+
+Best Kaggle Score achieved: 0.77990
+

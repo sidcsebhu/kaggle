@@ -32,6 +32,27 @@ def preprocess_data(train, test, params):
     full["IsAlone"]   = (full["FamilySize"] == 1).astype(int)
     full["IsChild"]   = (full["Age"] < 16).astype(int)
     
+    full["Title"]     = (full["Name"].str.split(",", expand=True)[1].str.split('.', expand=True)[0].str.strip())
+    
+#     normalize titles
+    TITLE_MAP = {
+        "Mr":"Mr",
+        "Mrs": "Mrs",
+        "Miss": "Miss",
+        "Master": "Master",
+        "Dr": "Rare",
+        "Rev": "Rare",
+        "Col": "Rare",
+        "Major": "Rare",
+        "Mlle": "Miss",
+        "Ms": "Miss",
+        "Mme": "Mrs",
+    }
+    full["Title"]     = full["Title"].map(TITLE_MAP).fillna("Rare")
+
+    title_dummies     = pd.get_dummies(full["Title"], prefix="Title")
+    full              = pd.concat([full, title_dummies], axis=1)
+    
     full.drop(columns=["Name", "Sex", "Ticket", "Cabin", "SibSp", "Parch","Embarked"], inplace=True)
     
     train_clean      = full.iloc[:len(train)]
